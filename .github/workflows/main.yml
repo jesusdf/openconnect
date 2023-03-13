@@ -43,6 +43,10 @@ jobs:
         uses: 1466587594/get-current-time@v2
         id: current-time
 
+      - name: Last commit
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
@@ -51,10 +55,10 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build-args: |
             BUILD_DATE=${{ steps.current-time.outputs.time }}
-            COMMIT_SHA=${{ github.sha }}
+            COMMIT_SHA=${{ steps.vars.outputs.sha_short }}
           tags: |
             docker.io/jesusdf/openconnect:latest
-            docker.io/jesusdf/openconnect:${{ github.sha }}
+            docker.io/jesusdf/openconnect:${{ steps.vars.outputs.sha_short }}
           
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
