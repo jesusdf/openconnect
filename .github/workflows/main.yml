@@ -43,6 +43,9 @@ jobs:
         uses: 1466587594/get-current-time@v2
         id: current-time
 
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
       - name: Last commit
         id: vars
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
