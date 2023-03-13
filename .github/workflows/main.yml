@@ -38,20 +38,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-
-      - name: Login to GHCR
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Login to quay.io
-        uses: docker/login-action@v1
-        with:
-          registry: quay.io
-          username: ${{ secrets.QUAY_USERNAME }}
-          password: ${{ secrets.QUAY_TOKEN }}
           
       - name: Get current time
         uses: 1466587594/get-current-time@v2
@@ -69,10 +55,6 @@ jobs:
           tags: |
             docker.io/jesusdf/openconnect:latest
             docker.io/jesusdf/openconnect:${{ github.sha }}
-            ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ github.sha }}
-            quay.io/jesusdf/openconnect:latest
-            quay.io/jesusdf/openconnect:${{ github.sha }}
           
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

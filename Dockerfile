@@ -1,5 +1,4 @@
-FROM docker.io/alpine:3.13
-LABEL maintainer='Alex Wicks <alex@awicks.io>'
+FROM docker.io/alpine:3.17
 
 # BUILD_DATE="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
 # COMMIT_SHA="$(git rev-parse HEAD 2>/dev/null || echo 'null')"
