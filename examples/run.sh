@@ -18,7 +18,7 @@ sudo docker run --rm -d \
 -e OTP="${OTP}" \
 -e SEARCH_DOMAINS="${SEARCH_DOMAINS}" \
 -e EXTRA_ARGS="${EXTRA_ARGS}" \
-docker.io/aw1cks/openconnect
+docker.io/jesusdf/openconnect
 
 CONTAINER_GW=$(sudo docker inspect "${CONTAINER_NAME}" | jq -r '.[0].NetworkSettings.Networks.bridge.IPAddress')
 # shellcheck disable=SC2153

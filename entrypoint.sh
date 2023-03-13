@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # Alex Wicks, 2021
-# github.com/aw1cks
+# github.com/jesusdf
 #
 
 get_resolv_nameservers() {

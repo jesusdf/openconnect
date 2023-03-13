@@ -1,7 +1,7 @@
 # OpenConnect Docker Container
 
-![github](https://github.com/aw1cks/openconnect/actions/workflows/main.yml/badge.svg)
-![gitlab](https://gitlab.com/aw1cks/openconnect/badges/master/pipeline.svg)
+![github](https://github.com/jesusdf/openconnect/actions/workflows/main.yml/badge.svg)
+![gitlab](https://gitlab.com/jesusdf/openconnect/badges/master/pipeline.svg)
 
 ## Why?
 
@@ -13,13 +13,13 @@ Additionally, running in a docker container gives some extra flexibility with ro
 
 The image is built by GitHub Actions for amd64 & arm64 and pushed to the following repositories:
 
- - [Docker Hub](https://hub.docker.com/r/aw1cks/openconnect)
- - [GitHub Container Registry](https://github.com/users/aw1cks/packages/container/package/openconnect)
- - [quay.io](https://quay.io/repository/aw1cks/openconnect)
+ - [Docker Hub](https://hub.docker.com/r/jesusdf/openconnect)
+ - [GitHub Container Registry](https://github.com/users/jesusdf/packages/container/package/openconnect)
+ - [quay.io](https://quay.io/repository/jesusdf/openconnect)
 
  There is additionally a build running in GitLab CI published to:
 
- - [GitLab](https://gitlab.com/aw1cks/openconnect/container_registry/2011097)
+ - [GitLab](https://gitlab.com/jesusdf/openconnect/container_registry/2011097)
 
 ## How do I use it?
 
@@ -38,7 +38,7 @@ docker run -d \
 -e PASS=mypassword \
 -e OTP=123456 \
 -e SEARCH_DOMAINS="my.corporate-domain.com subdomain.my.corporate-domain.com" \
-docker.io/aw1cks/openconnect'
+docker.io/jesusdf/openconnect'
 ```
 
 ### All container arguments

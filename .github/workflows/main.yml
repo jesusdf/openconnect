@@ -67,12 +67,12 @@ jobs:
             BUILD_DATE=${{ steps.current-time.outputs.time }}
             COMMIT_SHA=${{ github.sha }}
           tags: |
-            docker.io/aw1cks/openconnect:latest
-            docker.io/aw1cks/openconnect:${{ github.sha }}
+            docker.io/jesusdf/openconnect:latest
+            docker.io/jesusdf/openconnect:${{ github.sha }}
             ghcr.io/${{ github.repository }}:latest
             ghcr.io/${{ github.repository }}:${{ github.sha }}
-            quay.io/aw1cks/openconnect:latest
-            quay.io/aw1cks/openconnect:${{ github.sha }}
+            quay.io/jesusdf/openconnect:latest
+            quay.io/jesusdf/openconnect:${{ github.sha }}
           
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
