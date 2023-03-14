@@ -14,7 +14,7 @@ printf "\e[32m
 # Test for presence of required vars
 if [ -z "${TUN_DEVICE}" ]
 then
-  printf "\e[31m\WARNING: ${TUN_DEVICE} is not set, using tun127 by default.\e[0m\n"
+  printf "\e[31m\$WARNING: TUN_DEVICE is not set, using tun127 by default.\e[0m\n"
   TUN_DEVICE=tun127
 fi
 printf "\e[33mTun device name:\e[0m %s\n" "${TUN_DEVICE}"
