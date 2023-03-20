@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Alex Wicks, 2021
 # github.com/jesusdf
@@ -75,8 +75,10 @@ OPENCONNECT_CMD="openconnect --script='vpn-slice ${SPLICE_ARGS}' ${OPENCONNECT_A
 printf "\e[33mArguments:\e[0m %s\n\n" "${OPENCONNECT_CMD}"
 # shellcheck disable=SC2086
 if [ -n "${OTP}" ]; then
+# shellcheck disable=SC2086
   LOGIN_DATA="${PASS}\n${OTP}\n"
 else
+# shellcheck disable=SC2086
   LOGIN_DATA="${PASS}\n"
 fi
 echo -e "${LOGIN_DATA}" | eval ${OPENCONNECT_CMD}
