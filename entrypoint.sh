@@ -73,12 +73,12 @@ OPENCONNECT_ARGS="${OPENCONNECT_ARGS} ${URL}"
 printf "\e[32mStarting OpenConnect VPN...\e[0m\n"
 OPENCONNECT_CMD="openconnect --script='vpn-slice ${SPLICE_ARGS}' ${OPENCONNECT_ARGS}"
 printf "\e[33mArguments:\e[0m %s\n\n" "${OPENCONNECT_CMD}"
+
 # shellcheck disable=SC2086
 if [ -n "${OTP}" ]; then
-# shellcheck disable=SC2086
-  LOGIN_DATA="${PASS}\n${OTP}\n"
+  # shellcheck disable=SC2086
+  echo -e "${PASS}\n${OTP}\n" | eval ${OPENCONNECT_CMD}
 else
-# shellcheck disable=SC2086
-  LOGIN_DATA="${PASS}\n"
+  # shellcheck disable=SC2086
+  echo -e "${PASS}\n" | eval ${OPENCONNECT_CMD}
 fi
-echo -e "${LOGIN_DATA}" | eval ${OPENCONNECT_CMD}
