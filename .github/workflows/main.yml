@@ -60,8 +60,16 @@ jobs:
             BUILD_DATE=${{ steps.current-time.outputs.time }}
             COMMIT_SHA=${{ steps.vars.outputs.sha_short }}
           tags: |
-            docker.io/jesusdf/openconnect:latest
-            docker.io/jesusdf/openconnect:${{ steps.vars.outputs.sha_short }}
+            docker.io/${{ github.repository_owner }}/openconnect:latest
+            docker.io/${{ github.repository_owner }}/openconnect:${{ steps.vars.outputs.sha_short }}
           
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+
+      - name: Update Docker Hub Description
+        uses: peter-evans/dockerhub-description@v3
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: ${{ github.repository_owner }}/openconnect
+          readme-filepath: ./README.md

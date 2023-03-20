@@ -49,7 +49,8 @@ printf "\e[33mSplice parameters:\e[0m %s\n" "${SPLICE_ARGS}"
 
 printf "\e[32mSetting mandatory arguments...\e[0m\n"
 # Set user
-OPENCONNECT_ARGS="--user=${USER} -i ${TUN_DEVICE} --passwd-on-stdin --non-inter"
+# Drop --non-inter parameter
+OPENCONNECT_ARGS="--user=${USER} -i ${TUN_DEVICE} --passwd-on-stdin"
 
 # Test for auth group
 printf "\e[32mChecking for authentication group parameter...\e[0m\n"
@@ -73,4 +74,9 @@ printf "\e[32mStarting OpenConnect VPN...\e[0m\n"
 OPENCONNECT_CMD="openconnect --script='vpn-slice ${SPLICE_ARGS}' ${OPENCONNECT_ARGS}"
 printf "\e[33mArguments:\e[0m %s\n\n" "${OPENCONNECT_CMD}"
 # shellcheck disable=SC2086
-(echo "${PASS}"; [ -n "${OTP}" ] && echo "${OTP}") | eval ${OPENCONNECT_CMD}
+if [ -n "${OTP}" ]; then
+  LOGIN_DATA="${PASS}\n${OTP}\n"
+else
+  LOGIN_DATA="${PASS}\n"
+fi
+echo -e "${LOGIN_DATA}" | eval ${OPENCONNECT_CMD}
