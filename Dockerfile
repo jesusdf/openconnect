@@ -18,7 +18,7 @@ RUN apk add --no-cache openconnect \
     # add vpn-slice with dependencies (dig) https://github.com/dlenski/vpn-slice
     && apk add --no-cache bash python3 bind-tools py3-pip \
     && pip3 install "vpn-slice[dnspython,setproctitle]" \
-    && apk remove py3-pip \
+    && apk del py3-pip \
     && rm -f /sbin/apk \
              /usr/bin/wget \
              /usr/sbin/sendmail \
