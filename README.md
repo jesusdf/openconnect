@@ -32,6 +32,7 @@ You can run the container using the specified arguments below.
 ```shell
 docker run -d \
 --cap-add NET_ADMIN \
+-e TZ=Europe/Madrid \
 -e TUN_DEVICE=tun127 \
 -e URL=https://my.vpn.com \
 -e USER=myuser \
@@ -48,6 +49,7 @@ docker.io/jesusdf/openconnect'
 
 | Variable         | Explanation                                                                                                                                  | Example Value                                               |
 |------------------|----------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------|
+| `TZ`             | Timezone information                                                                                                                         | `Europe/Madrid`                                             | 
 | `TUN_DEVICE`     | Name of the tun device to use                                                                                                                | `tun127`                                                    | 
 | `URL`            | URL of AnyConnect VPN                                                                                                                        | `https://my.vpn.com`                                        |
 | `USER`           | User to authenticate with                                                                                                                    | `myuser`                                                    |
