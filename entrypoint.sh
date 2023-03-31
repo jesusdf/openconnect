@@ -71,7 +71,9 @@ printf "\e[32mSetting URL...\e[0m\n"
 OPENCONNECT_ARGS="${OPENCONNECT_ARGS} ${URL}"
 
 # Set the local time
+# shellcheck disable=SC2086
 cp /usr/share/zoneinfo/${TZ} /etc/localtime
+# shellcheck disable=SC2086
 echo "${TZ}" >  /etc/timezone
 
 printf "\e[32mStarting OpenConnect VPN...\e[0m\n"
