@@ -70,6 +70,10 @@ fi
 printf "\e[32mSetting URL...\e[0m\n"
 OPENCONNECT_ARGS="${OPENCONNECT_ARGS} ${URL}"
 
+# Set the local time
+cp /usr/share/zoneinfo/${TZ} /etc/localtime
+echo "${TZ}" >  /etc/timezone
+
 printf "\e[32mStarting OpenConnect VPN...\e[0m\n"
 OPENCONNECT_CMD="openconnect --script='vpn-slice ${SPLICE_ARGS}' ${OPENCONNECT_ARGS}"
 printf "\e[33mArguments:\e[0m %s\n\n" "${OPENCONNECT_CMD}"
