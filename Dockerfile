@@ -16,7 +16,7 @@ LABEL org.opencontainers.image.title='openconnect' \
 
 RUN apk add --no-cache openconnect \
     # add vpn-slice with dependencies (dig) https://github.com/dlenski/vpn-slice
-    && apk add --no-cache bash python3 bind-tools py3-pip tzdata \
+    && apk add --no-cache bash python3 bind-tools py3-pip tzdata ifupdown-ng \
     && pip3 install "vpn-slice[dnspython,setproctitle]" \
     && apk del py3-pip \
     && rm -f /sbin/apk \
