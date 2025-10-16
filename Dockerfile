@@ -1,4 +1,4 @@
-FROM docker.io/alpine:3.22
+FROM docker.io/alpine:3.19
 
 # BUILD_DATE="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
 # COMMIT_SHA="$(git rev-parse HEAD 2>/dev/null || echo 'null')"
@@ -15,9 +15,7 @@ LABEL org.opencontainers.image.title='openconnect' \
       org.opencontainers.image.revision="${COMMIT_SHA}"
 
 RUN apk add --no-cache openconnect \
-#   add vpn-slice with dependencies (dig) https://github.com/dlenski/vpn-slice
-    && apk add --no-cache bash python3 bind-tools tzdata ifupdown-ng vpn-slice vpn-slice-pyc \
-#   pip3 install "vpn-slice[dnspython,setproctitle]" \
+    && apk add --no-cache bash python3 bind-tools tzdata iptables ifupdown-ng vpn-slice vpn-slice-pyc \
     && rm -f /sbin/apk \
              /usr/bin/wget \
              /usr/sbin/sendmail \
