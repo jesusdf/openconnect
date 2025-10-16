@@ -14,11 +14,11 @@ LABEL org.opencontainers.image.title='openconnect' \
       org.opencontainers.image.source='https://github.com/jesusdf/openconnect' \
       org.opencontainers.image.revision="${COMMIT_SHA}"
 
-RUN apk add --no-cache openconnect \
-    # add vpn-slice with dependencies (dig) https://github.com/dlenski/vpn-slice
-    && apk add --no-cache bash python3 bind-tools py3-pip tzdata ifupdown-ng \
-    && pip3 install "vpn-slice[dnspython,setproctitle]" \
-    && apk del py3-pip \
+RUN apk add --no-cache openconnect
+# add vpn-slice with dependencies (dig) https://github.com/dlenski/vpn-slice
+RUN apk add --no-cache bash python3 bind-tools py3-pip tzdata ifupdown-ng
+RUN pip3 install "vpn-slice[dnspython,setproctitle]"
+RUN apk del py3-pip \
     && rm -f /sbin/apk \
              /usr/bin/wget \
              /usr/sbin/sendmail \
