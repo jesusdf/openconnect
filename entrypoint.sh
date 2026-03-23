@@ -47,6 +47,16 @@ then
 fi
 printf "\e[33mSplice parameters:\e[0m %s\n" "${SPLICE_ARGS}"
 
+if [ -z "${MIN_SESSION_TIME}" ]
+then
+  MIN_SESSION_TIME=600
+fi
+
+if [ -z "${RECONNECT_DELAY}" ]
+then
+  RECONNECT_DELAY=600
+fi
+
 printf "\e[32mSetting mandatory arguments...\e[0m\n"
 # Set user
 # Drop --non-inter parameter
@@ -80,6 +90,8 @@ printf "\e[32mStarting OpenConnect VPN...\e[0m\n"
 OPENCONNECT_CMD="openconnect --script='vpn-slice ${SPLICE_ARGS}' ${OPENCONNECT_ARGS}"
 printf "\e[33mArguments:\e[0m %s\n\n" "${OPENCONNECT_CMD}"
 
+START_DATE=$(date +%s)
+
 # shellcheck disable=SC2086
 if [ -n "${OTP}" ]; then
   # shellcheck disable=SC2086
@@ -88,3 +100,15 @@ else
   # shellcheck disable=SC2086
   echo -e "${PASS}\n" | eval ${OPENCONNECT_CMD}
 fi
+
+RESULT=$?
+
+END_DATE=$(date +%s)
+DURATION=$((END_DATE - START_DATE))
+
+if (( $DURATION < $MIN_SESSION_TIME )); then
+    echo "Premature failure, delaying retry by $RECONNECT_DELAY seconds."
+    sleep $RECONNECT_DELAY
+fi
+
+exit $RESULT
