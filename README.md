@@ -42,23 +42,27 @@ docker run -d \
 -e OTP=123456 \
 -e SEARCH_DOMAINS="my.corporate-domain.com subdomain.my.corporate-domain.com" \
 -e EXTRA_ARGS="--no-dtls" \
+-e MIN_SESSION_TIME=600 \
+-e RECONNECT_DELAY=600 \
 docker.io/jesusdf/openconnect'
 ```
 
 ### All container arguments
 
-| Variable         | Explanation                                                                                                                                  | Example Value                                               |
-|------------------|----------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------|
-| `TZ`             | Timezone information                                                                                                                         | `Europe/Madrid`                                             | 
-| `TUN_DEVICE`     | Name of the tun device to use                                                                                                                | `tun127`                                                    | 
-| `URL`            | URL of AnyConnect VPN                                                                                                                        | `https://my.vpn.com`                                        |
-| `USER`           | User to authenticate with                                                                                                                    | `myuser`                                                    |
-| `AUTH_GROUP`     | Authentication Group to use when connecting to VPN (optional)                                                                                | `mygroup`                                                   |
-| `PASS`           | Password to authenticate with                                                                                                                | `mypassword`                                                |
-| `SPLICE_ARGS`    | Space separated list of hostnames or networks that should be routed through (or excluded of) the VPN                                         | `server1.vpn.com 192.168.100.0/24`                          |
-| `OTP`            | OTP/2FA code (optional)                                                                                                                      | `123456`                                                    |
-| `SEARCH_DOMAINS` | Search domains to use. DNS for these domains will be routed via the VPN's DNS servers (optional). Separate with a space for multiple domains | `my.corporate-domain.com subdomain.my.corporate-domain.com` |
-| `EXTRA_ARGS`     | Any additional arguments to be passed to the OpenConnect client (optional). Only use this if you need something specific                     | `--verbose`                                                 |
+| Variable           | Explanation                                                                                                                                  | Example Value                                               |
+|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------|
+| `TZ`               | Timezone information                                                                                                                         | `Europe/Madrid`                                             | 
+| `TUN_DEVICE`       | Name of the tun device to use                                                                                                                | `tun127`                                                    | 
+| `URL`              | URL of AnyConnect VPN                                                                                                                        | `https://my.vpn.com`                                        |
+| `USER`             | User to authenticate with                                                                                                                    | `myuser`                                                    |
+| `AUTH_GROUP`       | Authentication Group to use when connecting to VPN (optional)                                                                                | `mygroup`                                                   |
+| `PASS`             | Password to authenticate with                                                                                                                | `mypassword`                                                |
+| `SPLICE_ARGS`      | Space separated list of hostnames or networks that should be routed through (or excluded of) the VPN                                         | `server1.vpn.com 192.168.100.0/24`                          |
+| `OTP`              | OTP/2FA code (optional)                                                                                                                      | `123456`                                                    |
+| `SEARCH_DOMAINS`   | Search domains to use. DNS for these domains will be routed via the VPN's DNS servers (optional). Separate with a space for multiple domains | `my.corporate-domain.com subdomain.my.corporate-domain.com` |
+| `EXTRA_ARGS`       | Any additional arguments to be passed to the OpenConnect client (optional). Only use this if you need something specific                     | `--verbose`                                                 |
+| `MIN_SESSION_TIME` | Minimum time required to not being threated as premature failure, in seconds (optional).                                                     | `600`                                                       |
+| `RECONNECT_DELAY`  | Delay time to wait until container shuts down after a premature failure, in seconds (optional).                                              | `600`                                                       |
 
 Notice that `vpn-slice` accepts several different kinds of routes and hostnames on the command line (via SPLICE_ARGS environment variable):
 

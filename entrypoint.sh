@@ -106,8 +106,10 @@ RESULT=$?
 END_DATE=$(date +%s)
 DURATION=$((END_DATE - START_DATE))
 
+# shellcheck disable=SC2004
 if (( $DURATION < $MIN_SESSION_TIME )); then
     echo "Premature failure, delaying retry by $RECONNECT_DELAY seconds."
+    # shellcheck disable=SC2086
     sleep $RECONNECT_DELAY
 fi
 
