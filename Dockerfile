@@ -27,7 +27,7 @@ RUN apk add --no-cache openconnect \
 COPY ./entrypoint.sh /vpn/entrypoint.sh
 WORKDIR /vpn
 
-HEALTHCHECK --start-period=15s --retries=1 \
+HEALTHCHECK --start-period=600s --retries=1 \
   CMD pgrep openconnect || exit 1
 
 ENTRYPOINT ["/vpn/entrypoint.sh"]
