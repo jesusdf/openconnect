@@ -10,13 +10,13 @@ LABEL org.opencontainers.image.title='openconnect' \
       org.opencontainers.image.created="${BUILD_DATE}" \
       org.opencontainers.image.description='AnyConnect-compatible client to route host traffic' \
       org.opencontainers.image.documentation='https://github.com/jesusdf/openconnect/blob/master/README.md' \
-      org.opencontainers.image.version='1.0' \
+      org.opencontainers.image.version='1.1' \
       org.opencontainers.image.source='https://github.com/jesusdf/openconnect' \
       org.opencontainers.image.revision="${COMMIT_SHA}"
 
 RUN apk add --no-cache openconnect \
     # add vpn-slice with dependencies (dig) https://github.com/dlenski/vpn-slice
-    && apk add --no-cache bash python3 bind-tools py3-pip tzdata ifupdown-ng \
+    && apk add --no-cache bash python3 bind-tools py3-pip tzdata ifupdown-ng openssl \
     && pip3 install "vpn-slice[dnspython,setproctitle]" \
     && apk del py3-pip \
     && rm -f /sbin/apk \

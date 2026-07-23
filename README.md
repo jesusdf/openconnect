@@ -42,6 +42,7 @@ docker run -d \
 -e OTP=123456 \
 -e SEARCH_DOMAINS="my.corporate-domain.com subdomain.my.corporate-domain.com" \
 -e EXTRA_ARGS="--no-dtls" \
+-e SERVERCERT=auto \
 -e MIN_SESSION_TIME=600 \
 -e RECONNECT_DELAY=600 \
 docker.io/jesusdf/openconnect'
@@ -61,6 +62,7 @@ docker.io/jesusdf/openconnect'
 | `OTP`              | OTP/2FA code (optional)                                                                                                                      | `123456`                                                    |
 | `SEARCH_DOMAINS`   | Search domains to use. DNS for these domains will be routed via the VPN's DNS servers (optional). Separate with a space for multiple domains | `my.corporate-domain.com subdomain.my.corporate-domain.com` |
 | `EXTRA_ARGS`       | Any additional arguments to be passed to the OpenConnect client (optional). Only use this if you need something specific                     | `--verbose`                                                 |
+| `SERVERCERT`       | Server certificate pin handling (optional). `auto` enables trust-on-first-use pinning (see below); or pass an explicit `pin-sha256:...` value | `auto`                                                      |
 | `MIN_SESSION_TIME` | Minimum time required to not being threated as premature failure, in seconds (optional).                                                     | `600`                                                       |
 | `RECONNECT_DELAY`  | Delay time to wait until container shuts down after a premature failure, in seconds (optional).                                              | `600`                                                       |
 
@@ -74,6 +76,40 @@ Notice that `vpn-slice` accepts several different kinds of routes and hostnames 
 
 There are many command-line options to alter the behavior of
 `vpn-slice`; try `vpn-slice --help` to show them all.
+
+### Automatic server certificate pinning (`SERVERCERT=auto`)
+
+Many private servers use self-signed certificates, which OpenConnect will not
+trust unless you pin them with `--servercert pin-sha256:...`. Maintaining that
+pin by hand is annoying, so `SERVERCERT=auto` makes the container manage it for
+you (trust-on-first-use):
+
+1. On first start, the container does a TLS-handshake-only probe (no credentials
+   are sent, so no OTP is consumed) to discover the server's pin, then caches it
+   in `/vpn/servercert.pin` and connects using it.
+2. On later starts it reuses the cached pin.
+3. If the cached pin ever stops matching (the server rotated its **key**),
+   OpenConnect reports it; the container re-discovers the new pin, logs the
+   change loudly, updates the cache and retries.
+
+The cache lives inside the container filesystem: it survives restarts, and is
+re-discovered from scratch whenever the container is recreated (e.g. an image
+update).
+
+The discovery probe is protocol-aware: any protocol-selecting flag you put in
+`EXTRA_ARGS` is honored while probing. For non-AnyConnect servers set it there,
+e.g. `EXTRA_ARGS="--protocol=fortinet"`. As a safety net, if OpenConnect cannot
+report the pin the container falls back to computing it with `openssl`, which is
+protocol-agnostic.
+
+> **Security note.** `pin-sha256` is a hash of the server's **public key**, not
+> of the certificate, so a normal certificate renewal that reuses the same key
+> does **not** change the pin. Auto-pinning only re-trusts on the very first
+> connection (or when the key actually changes), which is a *trust-on-first-use*
+> model: convenient, but it cannot detect a man-in-the-middle present at that
+> first moment. If you need strict protection, pass an explicit
+> `SERVERCERT=pin-sha256:...` (or the `--servercert` flag via `EXTRA_ARGS`)
+> obtained through a trusted channel instead.
 
 ### Requirements
  - `docker`
